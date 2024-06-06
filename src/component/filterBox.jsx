@@ -17,7 +17,7 @@ const FilterBox = ({
             <option value={""}>Select Status of Food Truck</option>
             {filterStatus.length > 0 &&
               filterStatus.map((z) => {
-                if (z) return <option value={z}>{z}</option>;
+                if (z) return <option key={z}  value={z}>{z}</option>;
               })}
           </select>
         </div>
@@ -30,7 +30,7 @@ const FilterBox = ({
             <option value={""}>Select Facility Type</option>
             {filterFacilityType.length > 0 &&
               filterFacilityType.map((z) => {
-                if (z) return <option value={z}>{z}</option>;
+                if (z) return <option key={z} value={z}>{z}</option>;
               })}
           </select>
         </div>

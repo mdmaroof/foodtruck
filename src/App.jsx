@@ -3,6 +3,7 @@ import { APIProvider, Map, Marker } from "@vis.gl/react-google-maps";
 import Heading from "./component/heading";
 import FilterBox from "./component/filterBox";
 import DataView from "./component/dataView";
+import { styles } from "./mapStyle";
 
 const apiCall = "https://data.sfgov.org/resource/rqzj-sfat.json";
 
@@ -73,6 +74,7 @@ const App = () => {
               defaultZoom={12}
               gestureHandling={"greedy"}
               disableDefaultUI={true}
+              options={{ styles }}
             />
 
             {filterData.length > 0 &&
