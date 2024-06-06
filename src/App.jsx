@@ -71,7 +71,7 @@ const App = () => {
             <Map
               style={{ width: "100vw", height: "100vh" }}
               defaultCenter={{ lat: 37.7749, lng: -122.4194 }}
-              defaultZoom={12}
+              defaultZoom={14}
               gestureHandling={"greedy"}
               disableDefaultUI={true}
               options={{ styles }}
