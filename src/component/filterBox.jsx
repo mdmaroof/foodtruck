@@ -6,7 +6,7 @@ const FilterBox = ({
 }) => {
   return (
     <>
-      <div className="absolute right-5 top-5 bg-[rgba(0,0,0,0.75)] w-[300px] z-10 flex flex-col p-5 gap-3">
+      <div className="absolute right-5 top-5 bg-[rgba(0,0,0,0.75)] w-[300px] z-10 flex flex-col p-5 gap-3 border-2">
         <div className="text-2xl text-white">Filter</div>
         <div className="gap-1 flex flex-col text-white">
           <div>Status of Food Truck</div>

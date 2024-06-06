@@ -7,7 +7,7 @@ const TextBox = ({ heading, data }) => (
 const DataView = ({ selectedTruck, setSelectedTruck }) => (
   <>
     {selectedTruck && (
-      <div className="absolute left-5 top-24 bg-[rgba(0,0,0,0.75)] w-[300px] z-10 text-white px-4 py-2 flex flex-col gap-2">
+      <div className="absolute left-5 top-24 bg-[rgba(0,0,0,0.75)] w-[300px] border-2 z-10 text-white px-4 py-2 flex flex-col gap-2">
         <TextBox heading="Applicant" data={selectedTruck.applicant} />
         <TextBox heading="Food Item" data={selectedTruck.fooditems} />
         <TextBox heading="Open Timing" data={selectedTruck.dayshours} />
