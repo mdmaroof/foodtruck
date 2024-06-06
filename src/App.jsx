@@ -66,7 +66,7 @@ const App = () => {
             setSelectedTruck={setSelectedTruck}
           />
 
-          <APIProvider apiKey={""}>
+          <APIProvider apiKey={"AIzaSyBqgs_hvjwBuPDZ9qn0ntHprZq3hBJSqTI"}>
             <Map
               style={{ width: "100vw", height: "100vh" }}
               defaultCenter={{ lat: 37.7749, lng: -122.4194 }}
