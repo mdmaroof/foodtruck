@@ -1,9 +1,14 @@
 const FilterBox = ({
   setFilterStatus,
   setFilterFacilityType,
-  filterFacilityType,
-  filterStatus,
+  data
 }) => {
+
+  const uniq = (items) => [...new Set(items)];
+  const filterFacilityType = uniq(data.map((item) => item.facilitytype));
+  const filterStatus = uniq(data.map((item) => item.status));
+
+
   return (
     <>
       <div className="absolute right-5 top-5 bg-[rgba(0,0,0,0.75)] w-[300px] z-10 flex flex-col p-5 gap-3 border-2">

@@ -1,5 +1,5 @@
 import { APIProvider, Map, Marker } from "@vis.gl/react-google-maps";
-import { styles } from "../mapStyle";
+import { styles } from "../../../mapStyle";
 
 const MapView = ({ data }) => {
     return (

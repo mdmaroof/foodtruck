@@ -1,11 +1,15 @@
+// library
 import { useEffect, useState } from "react";
-import Heading from "./component/heading";
-import FilterBox from "./component/filterBox";
-import DataView from "./component/dataView";
-import { callAPi } from "./api/mapApi/apiCall";
-import MapView from "./component/mapView";
+// component
+import Heading from "./component/routes/mapRoute/heading";
+import FilterBox from "./component/routes/mapRoute/filterBox";
+import DataView from "./component/routes/mapRoute/dataView";
+import MapView from "./component/routes/mapRoute/mapView";
+import { Loader } from "./component/common/loader";
+// functions
 import { filterDataFunction } from "./functions/filterDataMap";
-
+// api call
+import { callAPi } from "./api/mapApi/apiCall";
 
 const App = () => {
   const [data, setData] = useState([]);
@@ -25,27 +29,18 @@ const App = () => {
     }, 2000);
   }, []);
 
-  const uniq = (items) => [...new Set(items)];
-  const filterFacilityType = uniq(data.map((item) => item.facilitytype));
-  const filterStatus = uniq(data.map((item) => item.status));
-
   let filterData = filterDataFunction(data, filterFacilityTypeSelect, filterStatusSelect);
 
   return (
     <div className="w-full h-screen relative">
-      {loader && (
-        <div className="flex justify-center items-center h-screen w-full text-2xl">
-          Loading...
-        </div>
-      )}
+      {loader && <Loader />}
       {!loader && (
         <>
           <Heading />
           <FilterBox
             setFilterStatus={setFilterStatus}
             setFilterFacilityType={setFilterFacilityType}
-            filterFacilityType={filterFacilityType}
-            filterStatus={filterStatus}
+            data={data}
           />
           <DataView
             selectedTruck={selectedTruck}
