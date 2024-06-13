@@ -1,9 +1,10 @@
 import { APIProvider, Map, Marker } from "@vis.gl/react-google-maps";
 import { styles } from "../../../mapStyle";
+import { filterDataFunction } from "../../../functions/filterDataMap";
 
-const MapView = ({ data }) => {
+const MapView = ({ data, filterStatusSelect, filterFacilityTypeSelect }) => {
+    let filterData = filterDataFunction(data, filterFacilityTypeSelect, filterStatusSelect);
     return (
-
         <APIProvider apiKey={"AIzaSyBqgs_hvjwBuPDZ9qn0ntHprZq3hBJSqTI"}>
             <Map
                 style={{ width: "100vw", height: "100vh" }}
@@ -14,8 +15,8 @@ const MapView = ({ data }) => {
                 options={{ styles }}
             />
 
-            {data.length > 0 &&
-                data.map((z) => {
+            {filterData.length > 0 &&
+                filterData.map((z) => {
                     return (
                         <Marker
                             key={z.objectid}

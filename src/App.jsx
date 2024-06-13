@@ -6,8 +6,7 @@ import FilterBox from "./component/routes/mapRoute/filterBox";
 import DataView from "./component/routes/mapRoute/dataView";
 import MapView from "./component/routes/mapRoute/mapView";
 import { Loader } from "./component/common/loader";
-// functions
-import { filterDataFunction } from "./functions/filterDataMap";
+
 // api call
 import { callAPi } from "./api/mapApi/apiCall";
 
@@ -18,18 +17,26 @@ const App = () => {
   const [filterStatusSelect, setFilterStatus] = useState(null);
   const [selectedTruck, setSelectedTruck] = useState(null);
 
-  useEffect(() => {
-    setLoader(true);
-    callAPi()
-      .then(res => setData(res))
-      .catch(err => alert(err))
 
-    setTimeout(() => {
+  const dataHandle = async () => {
+    setLoader(true);
+    try {
+      const dataApi = await callAPi();
+      setData(dataApi)
+      setTimeout(() => {
+        setLoader(false);
+      }, 2000);
+    }
+    catch (err) {
       setLoader(false);
-    }, 2000);
+      alert(err)
+    }
+  }
+
+  useEffect(() => {
+    dataHandle()
   }, []);
 
-  let filterData = filterDataFunction(data, filterFacilityTypeSelect, filterStatusSelect);
 
   return (
     <div className="w-full h-screen relative">
@@ -46,7 +53,7 @@ const App = () => {
             selectedTruck={selectedTruck}
             setSelectedTruck={setSelectedTruck}
           />
-          <MapView data={filterData} />
+          <MapView data={data} filterFacilityTypeSelect={filterFacilityTypeSelect} filterStatusSelect={filterStatusSelect} />
 
         </>
       )}
