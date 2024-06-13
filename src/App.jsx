@@ -4,8 +4,8 @@ import Heading from "./component/heading";
 import FilterBox from "./component/filterBox";
 import DataView from "./component/dataView";
 import { styles } from "./mapStyle";
+import { callAPi } from "./api/mapApi/apiCall";
 
-const apiCall = "https://data.sfgov.org/resource/rqzj-sfat.json";
 
 const App = () => {
   const [data, setData] = useState([]);
@@ -14,20 +14,20 @@ const App = () => {
   const [filterStatusSelect, setFilterStatus] = useState(null);
   const [selectedTruck, setSelectedTruck] = useState(null);
 
-  const callAPi = async () => {
+  useEffect(() => {
     setLoader(true);
-    const response = await fetch(apiCall);
-    if (response.status === 200) {
-      const result = await response.json();
-      setData(result);
+    callAPi()
+      .then(res => setData(res))
+      .catch(err => alert(err))
+
+    try {
+
     }
+    catch { err => alert(err) }
+
     setTimeout(() => {
       setLoader(false);
     }, 2000);
-  };
-
-  useEffect(() => {
-    callAPi();
   }, []);
 
   const uniq = (items) => [...new Set(items)];
