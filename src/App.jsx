@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { APIProvider, Map, Marker } from "@vis.gl/react-google-maps";
 import Heading from "./component/heading";
 import FilterBox from "./component/filterBox";
 import DataView from "./component/dataView";
-import { styles } from "./mapStyle";
 import { callAPi } from "./api/mapApi/apiCall";
+import MapView from "./component/mapView";
+import { filterDataFunction } from "./functions/filterDataMap";
 
 
 const App = () => {
@@ -20,11 +20,6 @@ const App = () => {
       .then(res => setData(res))
       .catch(err => alert(err))
 
-    try {
-
-    }
-    catch { err => alert(err) }
-
     setTimeout(() => {
       setLoader(false);
     }, 2000);
@@ -34,17 +29,7 @@ const App = () => {
   const filterFacilityType = uniq(data.map((item) => item.facilitytype));
   const filterStatus = uniq(data.map((item) => item.status));
 
-  let filterData = data;
-
-  if (filterFacilityTypeSelect) {
-    filterData = filterData.filter(
-      (z) => z.facilitytype === filterFacilityTypeSelect
-    );
-  }
-
-  if (filterStatusSelect) {
-    filterData = filterData.filter((z) => z.status === filterStatusSelect);
-  }
+  let filterData = filterDataFunction(data, filterFacilityTypeSelect, filterStatusSelect);
 
   return (
     <div className="w-full h-screen relative">
@@ -66,28 +51,8 @@ const App = () => {
             selectedTruck={selectedTruck}
             setSelectedTruck={setSelectedTruck}
           />
+          <MapView data={filterData} />
 
-          <APIProvider apiKey={"AIzaSyBqgs_hvjwBuPDZ9qn0ntHprZq3hBJSqTI"}>
-            <Map
-              style={{ width: "100vw", height: "100vh" }}
-              defaultCenter={{ lat: 37.7749, lng: -122.4194 }}
-              defaultZoom={14}
-              gestureHandling={"greedy"}
-              disableDefaultUI={true}
-              options={{ styles }}
-            />
-
-            {filterData.length > 0 &&
-              filterData.map((z) => {
-                return (
-                  <Marker
-                    key={z.objectid}
-                    position={{ lat: +z.latitude, lng: +z.longitude }}
-                    onClick={() => setSelectedTruck(z)}
-                  />
-                );
-              })}
-          </APIProvider>
         </>
       )}
     </div>
