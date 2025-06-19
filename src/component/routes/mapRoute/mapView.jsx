@@ -1,32 +1,22 @@
-import { APIProvider, Map, Marker } from "@vis.gl/react-google-maps";
+import { APIProvider, Map } from "@vis.gl/react-google-maps";
 import { styles } from "../../../mapStyle";
-import { filterDataFunction } from "../../../functions/filterDataMap";
+import Markers from "../../../component/common/Marker";
 
-const MapView = ({ data, filterStatusSelect, filterFacilityTypeSelect }) => {
-    let filterData = filterDataFunction(data, filterFacilityTypeSelect, filterStatusSelect);
-    return (
-        <APIProvider apiKey={"AIzaSyBqgs_hvjwBuPDZ9qn0ntHprZq3hBJSqTI"}>
-            <Map
-                style={{ width: "100vw", height: "100vh" }}
-                defaultCenter={{ lat: 37.7749, lng: -122.4194 }}
-                defaultZoom={14}
-                gestureHandling={"greedy"}
-                disableDefaultUI={true}
-                options={{ styles }}
-            />
-
-            {filterData.length > 0 &&
-                filterData.map((z) => {
-                    return (
-                        <Marker
-                            key={z.objectid}
-                            position={{ lat: +z.latitude, lng: +z.longitude }}
-                            onClick={() => setSelectedTruck(z)}
-                        />
-                    );
-                })}
-        </APIProvider>
-    )
-}
+const MapView = () => {
+  return (
+    <APIProvider apiKey={"AIzaSyBqgs_hvjwBuPDZ9qn0ntHprZq3hBJSqTI"}>
+      <Map
+        style={{ width: "100vw", height: "100vh" }}
+        defaultCenter={{ lat: 37.7749, lng: -122.4194 }}
+        defaultZoom={14}
+        gestureHandling={"greedy"}
+        disableDefaultUI={true}
+        options={{ styles }}
+      >
+        <Markers/>
+      </Map>
+    </APIProvider>
+  );
+};
 
 export default MapView;

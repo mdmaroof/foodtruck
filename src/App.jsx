@@ -1,11 +1,13 @@
 // library
-import { useEffect, useState } from "react";
+import { useEffect, useState, createContext } from "react";
 // component
 import Heading from "./component/routes/mapRoute/heading";
 import FilterBox from "./component/routes/mapRoute/filterBox";
 import DataView from "./component/routes/mapRoute/dataView";
 import MapView from "./component/routes/mapRoute/mapView";
 import { Loader } from "./component/common/loader";
+
+export const SelectedTruckContext = createContext();
 
 // api call
 import { callAPi } from "./api/mapApi/apiCall";
@@ -17,29 +19,26 @@ const App = () => {
   const [filterStatusSelect, setFilterStatus] = useState(null);
   const [selectedTruck, setSelectedTruck] = useState(null);
 
-
   const dataHandle = async () => {
     setLoader(true);
     try {
       const dataApi = await callAPi();
-      setData(dataApi)
+      setData(dataApi);
       setTimeout(() => {
         setLoader(false);
       }, 2000);
-    }
-    catch (err) {
+    } catch (err) {
       setLoader(false);
-      alert(err)
+      alert(err);
     }
-  }
+  };
 
   useEffect(() => {
-    dataHandle()
+    dataHandle();
   }, []);
 
-
   return (
-    <div className="w-full h-screen relative">
+    <div className="relative w-full h-screen">
       {loader && <Loader />}
       {!loader && (
         <>
@@ -49,12 +48,21 @@ const App = () => {
             setFilterFacilityType={setFilterFacilityType}
             data={data}
           />
-          <DataView
-            selectedTruck={selectedTruck}
-            setSelectedTruck={setSelectedTruck}
-          />
-          <MapView data={data} filterFacilityTypeSelect={filterFacilityTypeSelect} filterStatusSelect={filterStatusSelect} />
-
+          <SelectedTruckContext.Provider
+            value={{
+              selectedTruck,
+              setSelectedTruck,
+              data,
+              filterFacilityTypeSelect,
+              filterStatusSelect,
+            }}
+          >
+            <DataView
+              selectedTruck={selectedTruck}
+              setSelectedTruck={setSelectedTruck}
+            />
+            <MapView />
+          </SelectedTruckContext.Provider>
         </>
       )}
     </div>
